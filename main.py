@@ -22,11 +22,11 @@ def get_db():
 
 @app.get("/s/{link_code}")
 def redirect_url(link_code, db: Session = Depends(get_db)):
-    print(link_code)
+
     url_info = views.get_url(db, link_code=link_code)
     origin_url = views.default_404_page()
     if url_info:
-        if url_info.expired_at > datetime.utcnow():
+        if url_info.expired_at and url_info.expired_at > datetime.utcnow():
             origin_url = url_info.url
         else:
             logger.info(f'the url({url_info.url}) has expired after {url_info.expired_at}')
