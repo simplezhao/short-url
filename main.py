@@ -34,7 +34,7 @@ def redirect_url(link_code, db: Session = Depends(get_db)):
             origin_url = url_info.url
         else:
             logger.info(
-                f"the url({url_info.url}) has expired after {url_info.expired_at}, dropped"
+                f"the url({url_info.url}) has expired after {url_info.expired_at}"
             )
     logger.info(f"the redirect url is {origin_url}")
     return RedirectResponse(origin_url, status_code=302)
